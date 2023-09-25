@@ -13,83 +13,73 @@
         <form>
             <div class="form-group">
                 <label for="yearly_salary">Yearly Salary ($):</label>
-                <input type="text" class="form-control salary-input" id="yearly_salary" placeholder="Enter yearly salary">
+                <input type="text" class="form-control salary-input" id="yearly_salary" name="yearly_salary" placeholder="Enter yearly wage">
             </div>
             <div class="form-group">
-                <label for="hourly_rate">Hourly Rate ($):</label>
-                <input type="text" class="form-control salary-input" id="hourly_rate" placeholder="Enter hourly rate">
+                <label for="monthly_salary">Monthly Wage ($):</label>
+                <input type="text" class="form-control salary-input" id="monthly_salary" name="monthly_salary" placeholder="Enter monthly wage">
             </div>
             <div class="form-group">
-                <label for="monthly_salary">Monthly Salary ($):</label>
-                <input type="text" class="form-control salary-input" id="monthly_salary" placeholder="Enter monthly salary">
+                <label for="weekly_salary">Weekly Wage ($):</label>
+                <input type="text" class="form-control salary-input" id="weekly_salary" name="weekly_salary" placeholder="Enter weekly wage">
             </div>
             <div class="form-group">
-                <label for="weekly_salary">Weekly Salary ($):</label>
-                <input type="text" class="form-control salary-input" id="weekly_salary" placeholder="Enter weekly salary">
+                <label for="daily_salary">Daily Wage ($):</label>
+                <input type="text" class="form-control salary-input" id="daily_salary" name="daily_salary" placeholder="Enter daily wage">
             </div>
             <div class="form-group">
-                <label for="daily_salary">Daily Salary ($):</label>
-                <input type="text" class="form-control salary-input" id="daily_salary" placeholder="Enter daily salary">
+                <label for="hourly_rate">Hourly Wage ($):</label>
+                <input type="text" class="form-control salary-input" id="hourly_rate" name="hourly_rate" placeholder="Enter hourly wage">
             </div>
         </form>
-
-        <div class="mt-4">
-            <h4>Results:</h4>
-            <p><strong>Yearly Salary:</strong> $ <span id="result_yearly_salary">0.00</span></p>
-            <p><strong>Hourly Rate:</strong> $ <span id="result_hourly_rate">0.00</span></p>
-            <p><strong>Monthly Salary:</strong> $ <span id="result_monthly_salary">0.00</span></p>
-            <p><strong>Weekly Salary:</strong> $ <span id="result_weekly_salary">0.00</span></p>
-            <p><strong>Daily Salary:</strong> $ <span id="result_daily_salary">0.00</span></p>
-        </div>
-    </div>
+    </div>    
+    
 
     <script>
         $(document).ready(function() {
             $('.salary-input').on('input', function() {
-                // Get the entered value
                 var inputValue = parseFloat($(this).val());
-
-                // Determine which input field was changed
-                var inputId = $(this).attr('id');
-
-                // Calculate and update other fields based on the changed field
+    
                 if (!isNaN(inputValue)) {
-                    if (inputId === 'yearly_salary') {
-                        $('#result_hourly_rate').text((inputValue / (40 * 52)).toFixed(2));
-                        $('#result_monthly_salary').text((inputValue / 12).toFixed(2));
-                        $('#result_weekly_salary').text((inputValue / 52).toFixed(2));
-                        $('#result_daily_salary').text((inputValue / (52 * 5)).toFixed(2));
-                    } else if (inputId === 'hourly_rate') {
-                        $('#result_yearly_salary').text((inputValue * 40 * 52).toFixed(2));
-                        $('#result_monthly_salary').text((inputValue * 40 * 52 / 12).toFixed(2));
-                        $('#result_weekly_salary').text((inputValue * 40).toFixed(2));
-                        $('#result_daily_salary').text((inputValue * 8).toFixed(2));
-                    } else if (inputId === 'monthly_salary') {
-                        $('#result_yearly_salary').text((inputValue * 12).toFixed(2));
-                        $('#result_hourly_rate').text((inputValue * 12 / (40 * 52)).toFixed(2));
-                        $('#result_weekly_salary').text((inputValue * 12 / 52).toFixed(2));
-                        $('#result_daily_salary').text((inputValue * 12 / (52 * 5)).toFixed(2));
-                    } else if (inputId === 'weekly_salary') {
-                        $('#result_yearly_salary').text((inputValue * 52).toFixed(2));
-                        $('#result_hourly_rate').text((inputValue / 40).toFixed(2));
-                        $('#result_monthly_salary').text((inputValue * 52 / 12).toFixed(2));
-                        $('#result_daily_salary').text((inputValue / 5).toFixed(2));
-                    } else if (inputId === 'daily_salary') {
-                        $('#result_yearly_salary').text((inputValue * 52 * 5).toFixed(2));
-                        $('#result_hourly_rate').text((inputValue / 8).toFixed(2));
-                        $('#result_monthly_salary').text((inputValue * 52 * 5 / 12).toFixed(2));
-                        $('#result_weekly_salary').text((inputValue * 5).toFixed(2));
+                    var targetField = $(this).attr('id');
+                    var weeklyHours = 40;
+    
+                    if (targetField === 'yearly_salary') {
+                        $('#hourly_rate').val((inputValue / (weeklyHours * 52)).toFixed(2));
+                        $('#monthly_salary').val((inputValue / 12).toFixed(2));
+                        $('#weekly_salary').val((inputValue / 52).toFixed(2));
+                        $('#daily_salary').val((inputValue / (5 * 52)).toFixed(2));
+                    } else if (targetField === 'hourly_rate') {
+                        $('#yearly_salary').val((inputValue * weeklyHours * 52).toFixed(2));
+                        $('#monthly_salary').val((inputValue * weeklyHours * 4).toFixed(2));
+                        $('#weekly_salary').val((inputValue * weeklyHours).toFixed(2));
+                        $('#daily_salary').val((inputValue * weeklyHours / 5).toFixed(2));
+                    } else if (targetField === 'monthly_salary') {
+                        $('#yearly_salary').val((inputValue * 12).toFixed(2));
+                        $('#hourly_rate').val((inputValue / (4 * weeklyHours)).toFixed(2));
+                        $('#weekly_salary').val((inputValue / 4).toFixed(2));
+                        $('#daily_salary').val((inputValue / (4 * 5)).toFixed(2));
+                    } else if (targetField === 'weekly_salary') {
+                        $('#yearly_salary').val((inputValue * 52).toFixed(2));
+                        $('#hourly_rate').val((inputValue / weeklyHours).toFixed(2));
+                        $('#monthly_salary').val((inputValue * 4).toFixed(2));
+                        $('#daily_salary').val((inputValue / 5).toFixed(2));
+                    } else if (targetField === 'daily_salary') {
+                        $('#yearly_salary').val((inputValue * 5 * 52).toFixed(2));
+                        $('#hourly_rate').val((inputValue / (5 * weeklyHours)).toFixed(2));
+                        $('#monthly_salary').val((inputValue * 5 * 4).toFixed(2));
+                        $('#weekly_salary').val((inputValue * 5).toFixed(2));
                     }
                 } else {
-                    // If the input is not a valid number, display an error
-                    $('#result_yearly_salary').text('Invalid input');
-                    $('#result_hourly_rate').text('Invalid input');
-                    $('#result_monthly_salary').text('Invalid input');
-                    $('#result_weekly_salary').text('Invalid input');
-                    $('#result_daily_salary').text('Invalid input');
+                    // Clear all fields when input is not a valid number
+                    $('.salary-input').val('');
                 }
             });
         });
     </script>
+    
+    
+    
+    
 </body>
 </html>

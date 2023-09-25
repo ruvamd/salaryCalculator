@@ -53,13 +53,12 @@ def calculate_salary():
             hourly_rate = yearly_salary / (HOURS_PER_WEEK * WEEKS_PER_YEAR)
             monthly_salary = yearly_salary / MONTHS_PER_YEAR
 
-        return jsonify({
-            'yearly_salary': yearly_salary,
-            'hourly_rate': hourly_rate,
-            'monthly_salary': monthly_salary,
-            'weekly_salary': weekly_salary,
-            'daily_salary': daily_salary
-        })
+        return render_template('index.html', 
+                               yearly_salary=yearly_salary,
+                               hourly_rate=hourly_rate,
+                               monthly_salary=monthly_salary,
+                               weekly_salary=weekly_salary,
+                               daily_salary=daily_salary)
     except ValueError:
         return jsonify({'error': 'Invalid input. Please enter valid values.'})
 
