@@ -49,26 +49,33 @@
                         $('#monthly_salary').val((inputValue / 12).toFixed(2));
                         $('#weekly_salary').val((inputValue / 52).toFixed(2));
                         $('#daily_salary').val((inputValue / (5 * 52)).toFixed(2));
-                    } else if (targetField === 'hourly_rate') {
-                        $('#yearly_salary').val((inputValue * weeklyHours * 52).toFixed(2));
-                        $('#monthly_salary').val((inputValue * weeklyHours * 4).toFixed(2));
-                        $('#weekly_salary').val((inputValue * weeklyHours).toFixed(2));
-                        $('#daily_salary').val((inputValue * weeklyHours / 5).toFixed(2));
+
                     } else if (targetField === 'monthly_salary') {
                         $('#yearly_salary').val((inputValue * 12).toFixed(2));
-                        $('#hourly_rate').val((inputValue / (4 * weeklyHours)).toFixed(2));
-                        $('#weekly_salary').val((inputValue / 4).toFixed(2));
-                        $('#daily_salary').val((inputValue / (4 * 5)).toFixed(2));
+                        $('#hourly_rate').val((inputValue / (weeklyHours * 4)).toFixed(2));
+                        // Calculate weekly and daily salaries based on exact weeks and days in a month
+                        var daysInMonth = 30.44; // Average number of days in a month
+                        var weeksInMonth = daysInMonth / 7;
+                        $('#weekly_salary').val((inputValue / weeksInMonth).toFixed(2));
+                        $('#daily_salary').val((inputValue / daysInMonth).toFixed(2));
+
                     } else if (targetField === 'weekly_salary') {
                         $('#yearly_salary').val((inputValue * 52).toFixed(2));
                         $('#hourly_rate').val((inputValue / weeklyHours).toFixed(2));
                         $('#monthly_salary').val((inputValue * 4).toFixed(2));
                         $('#daily_salary').val((inputValue / 5).toFixed(2));
+                        
                     } else if (targetField === 'daily_salary') {
                         $('#yearly_salary').val((inputValue * 5 * 52).toFixed(2));
                         $('#hourly_rate').val((inputValue / (5 * weeklyHours)).toFixed(2));
                         $('#monthly_salary').val((inputValue * 5 * 4).toFixed(2));
                         $('#weekly_salary').val((inputValue * 5).toFixed(2));
+                    
+                    } else if (targetField === 'hourly_rate') {
+                        $('#yearly_salary').val((inputValue * weeklyHours * 52).toFixed(2));
+                        $('#monthly_salary').val((inputValue * weeklyHours * 4).toFixed(2));
+                        $('#weekly_salary').val((inputValue * weeklyHours).toFixed(2));
+                        $('#daily_salary').val((inputValue * weeklyHours / 5).toFixed(2));
                     }
                 } else {
                     // Clear all fields when input is not a valid number
@@ -77,9 +84,6 @@
             });
         });
     </script>
-    
-    
-    
-    
+        
 </body>
 </html>
